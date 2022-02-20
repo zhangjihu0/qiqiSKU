@@ -17,7 +17,7 @@ function AddModal(props) {
     const [form] = Form.useForm()
 
     useEffect(() => {
-        modalVisible && form.setFieldsValue({
+        modalVisible && form.setFieldsValue && form.setFieldsValue({
             name: ''
         })
         return () => { form.resetFields() }

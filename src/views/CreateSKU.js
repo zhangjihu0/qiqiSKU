@@ -16,7 +16,7 @@ function CreateSKU() {
 
     let {
         handleQuickSetSkuStock
-    } = useCreateSKUTableHook(skuList, attrList, dispatch)
+    } = useCreateSKUTableHook({ skuList, attrList, dispatch })
 
     const columns = [
         {
@@ -110,6 +110,7 @@ const CreateSKUItem = ({ attrItem, rowIndex = 0, handleAddCol = () => { }, handl
 }
 const useCreateSKUTableHook = ({ skuList = [], attrList = [], dispatch = () => { } }) => {
     // 快速设置库存,方便调试Mock
+
     const handleQuickSetSkuStock = () => {
         dispatch({
             type: 'setSkuList',
@@ -160,9 +161,14 @@ const useCreateSKUHook = ({ skuList = [], attrList = [], dispatch = () => { } })
     // 选项-添加
     const handleAddCol = (optionName = "", rowIndex = 0) => {
         const newAttrList = produce(attrList, (draft) => {
-            draft[rowIndex].options.push({
+            console.log()
+            Array.isArray(draft?.[rowIndex]?.options) ? draft[rowIndex].options.push({
                 value: optionName
-            })
+            }) : draft[rowIndex].options = [
+                {
+                    value: optionName
+                }
+            ]
         })
         dispatch({
             type: "setAttrList",
@@ -219,11 +225,11 @@ export function createSkuList(attrList = [], prevSkuList = []) {
     const loop = (rowIndex, prevOptions) => {
         console.log('217', rowIndex, prevOptions);
         const attrItem = attrList[rowIndex];
-        if (attrItem.options.length === 0) {
+        if (attrItem?.options && (attrItem?.options ?? []).length === 0) {
             loop(rowIndex + 1, prevOptions)
             return
         }
-        for (const option of attrItem.options) {
+        for (const option of (attrItem?.options ?? [])) {
             const curOptions = prevOptions.concat({
                 label: attrItem.attrLabel,
                 value: option.value

@@ -6,7 +6,7 @@ import {
   Redirect,
   Link,
 } from "react-router-dom";
-import "antd/dist/antd.css";
+
 import { Row, Col, Button, Layout, Divider } from "antd";
 import CreateSKU from "./views/CreateSKU";
 import SearchSKU from "./views/SearchSKU";
