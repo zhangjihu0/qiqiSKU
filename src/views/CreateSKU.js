@@ -161,7 +161,6 @@ const useCreateSKUHook = ({ skuList = [], attrList = [], dispatch = () => { } })
     // 选项-添加
     const handleAddCol = (optionName = "", rowIndex = 0) => {
         const newAttrList = produce(attrList, (draft) => {
-            console.log()
             Array.isArray(draft?.[rowIndex]?.options) ? draft[rowIndex].options.push({
                 value: optionName
             }) : draft[rowIndex].options = [
@@ -215,15 +214,12 @@ const useCreateSKUHook = ({ skuList = [], attrList = [], dispatch = () => { } })
  * @returns 新的sku列表数据
  */
 export function createSkuList(attrList = [], prevSkuList = []) {
-    console.log('208', attrList, prevSkuList);
     const skuList = [];//收集结果
     let id = 0;//生成skuId
     // 旧的SkuList转map，方便下方的复用判断
     const prevSkuMap = skuList2Map(prevSkuList);
-    console.log('154', prevSkuMap);
 
     const loop = (rowIndex, prevOptions) => {
-        console.log('217', rowIndex, prevOptions);
         const attrItem = attrList[rowIndex];
         if (attrItem?.options && (attrItem?.options ?? []).length === 0) {
             loop(rowIndex + 1, prevOptions)
